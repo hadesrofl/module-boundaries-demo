@@ -1,3 +1,73 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "plugins": [
+    "boundaries"
+  ],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:boundaries/recommended",
+    "plugin:import/recommended"
+  ],
+  "settings": {
+    "boundaries/elements": [
+      {
+        "type": "app",
+        "pattern": "src/app"
+      },
+      {
+        "type": "features",
+        "pattern": "src/features"
+      }
+    ]
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": [
+              "@features/*/*"
+            ],
+            "message": "usage of feature modules internals not allowed."
+          }
+        ]
+      }
+    ],
+    "boundaries/element-types": [
+      2,
+      {
+        // disallow all imports by default if no rule is present
+        "default": "disallow",
+        "rules": [
+          {
+            "from": [
+              "app"
+            ],
+            "allow": [
+              "app",
+              "features"
+            ]
+          },
+          {
+            "from": [
+              "features"
+            ],
+            "allow": [
+              "features"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "overrides": []
 }
+

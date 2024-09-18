@@ -1,4 +1,7 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a simple demo of how to use module boundaries with eslint.
+Those boundaries helps us to define our architectural style and to keep internal behaviour of modules hidden from
+consumers.
+It also sets up rules and restricts who is allowed to consume it.
 
 ## Getting Started
 
@@ -16,21 +19,15 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## eslintrc.json
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Inside the eslint config file, `boundaries/elements` define our scopes and modules.
+Those are references in the rules section of `boundaries/element-types` and tell which modules they are allowed to use.
+To see this happening, after running `npm install` go over to `bestiary.tsx` inside `features/statblock/pages` and
+remove the comment for `iAmAConst`.
 
-## Learn More
+`no-restricted-imports` is set up to only allow imports from the root level of a feature module.
+We set up a `index.ts` barrel file to restrict public exports from a feature module.
+Only those are allowed to import and help to differentiate between internal implementations and expose functionality.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
